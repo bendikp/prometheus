@@ -56,12 +56,14 @@ oc adm policy add-scc-to-user anyuid -z grafana -n grafana
 ```
 cd grafana
 
-curl -s -H "Authorization: Bearer eyJrIjoiZ3E3dGdRQTk2Slg1eVM0dHl5QjJpZVJMRkk0T0s2dEEiLCJuIjoiQWRtaW4iLCJpZCI6MX0=" \
+
+TOKEN=insert-token-here
+curl -s -H "Authorization: Bearer $TOKEN" \
  -H "Content-Type: application/json" \
  --data @add_datasource.json http://grafana-grafana.127.0.0.1.nip.io/api/datasources \
  | jq .
 
-curl -s -H "Authorization: Bearer eyJrIjoiZ3E3dGdRQTk2Slg1eVM0dHl5QjJpZVJMRkk0T0s2dEEiLCJuIjoiQWRtaW4iLCJpZCI6MX0=" \
+curl -s -H "Authorization: Bearer $TOKEN" \
  -H "Content-Type: application/json" \
  --data @add_dashboard.json http://grafana-grafana.127.0.0.1.nip.io/api/dashboards/db \
  | jq .
