@@ -73,5 +73,6 @@ curl -s -H "Authorization: Bearer $TOKEN" \
  | jq .
 ```
 
-* [Prometheus dashboard!](https://grafana.com/dashboards/3662)
-* [Kubernetes dashboard!](https://grafana.com/dashboards/315)
+[https://grafana.com/dashboards](https://grafana.com/dashboards)
+* [Prometheus dashboard](https://grafana.com/dashboards/3662)
+* [Kubernetes dashboard](https://grafana.com/dashboards/315)
