@@ -3,11 +3,11 @@
 ```
 oc cluster up
 
-# Make devloper cluster-admin
+# Make developer cluster-admin
 oc login -u system:admin
 oc adm policy add-cluster-role-to-user cluster-admin developer
 
-# Remove prometheus annotations from svc/router in default namespace
+# Remove prometheus annotation from svc/router in default project
 oc annotate svc/router -n default prometheus.io/scrape-
 ```
 
@@ -35,7 +35,7 @@ sudo iptables -A IN_dockerc_allow -p tcp -m tcp --dport 10250 -m conntrack --cts
 sudo iptables -A IN_dockerc_allow -p tcp -m tcp --dport 1936 -m conntrack --ctstate NEW -j ACCEPT
 ```
 
-## Deploy simple Python application with Prometheus metrics
+## Deploy a simple Python application with Prometheus metrics
 
 ```
 # Create a new project and deploy simple-app
