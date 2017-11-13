@@ -35,7 +35,7 @@ sudo iptables -A IN_dockerc_allow -p tcp -m tcp --dport 10250 -m conntrack --cts
 sudo iptables -A IN_dockerc_allow -p tcp -m tcp --dport 1936 -m conntrack --ctstate NEW -j ACCEPT
 ```
 
-# Deploy simple Python application with Prometheus metrics
+## Deploy simple Python application with Prometheus metrics
 
 ```
 # Create a new project and deploy simple-app
@@ -50,7 +50,7 @@ oc create -f \
 request_processing_seconds_count{container_name="simple-app"}
 ```
 
-# Install Grafana
+## Install Grafana
 
 ```
 # Create a new project and deploy Grafana
@@ -73,5 +73,5 @@ curl -s -H "Authorization: Bearer $TOKEN" \
  | jq .
 ```
 
-[Prometheus dashboard!](https://grafana.com/dashboards/3662)
-[Kubernetes dashboard!](https://grafana.com/dashboards/315)
+* [Prometheus dashboard!](https://grafana.com/dashboards/3662)
+* [Kubernetes dashboard!](https://grafana.com/dashboards/315)
