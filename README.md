@@ -1,16 +1,22 @@
-# prometheus
+# Prometheus
 
 ```
 oc cluster up
+
+# Make devloper cluster-admin
 oc login -u system:admin
 oc adm policy add-cluster-role-to-user cluster-admin developer
-oc login -u developer
-oc new-project prometheus
+
+# Remove prometheus annotations from svc/router in default namespace
+oc annotate svc/router -n default prometheus.io/scrape-
 ```
 
+## Install Prometheus
+
 ```
-# Remove prometheus annotations from svc/router in default namespace.
-oc annotate svc/router -n default prometheus.io/scrape-
+# Login and create a new project for Prometheus
+oc login -u developer
+oc new-project prometheus
 
 # Install Prometheus server
 oc process -f \
@@ -29,22 +35,25 @@ sudo iptables -A IN_dockerc_allow -p tcp -m tcp --dport 10250 -m conntrack --cts
 sudo iptables -A IN_dockerc_allow -p tcp -m tcp --dport 1936 -m conntrack --ctstate NEW -j ACCEPT
 ```
 
+# Deploy simple Python application with Prometheus metrics
+
 ```
-# Create a new project to deploy simple-app in
+# Create a new project and deploy simple-app
 oc new-project simple-app
 
 oc create -f \
  https://raw.githubusercontent.com/bendikp/prometheus/master/simple_app/objects/list.yml
 ```
 
-
 ```
 # Queries
-container_memory_usage_bytes{container_name="simple-app"}
+request_processing_seconds_count{container_name="simple-app"}
 ```
 
+# Install Grafana
+
 ```
-# Create a new project to deploy Grafana in
+# Create a new project and deploy Grafana
 oc new-project grafana
 
 oc create -f \
@@ -53,18 +62,16 @@ oc create -f \
 oc adm policy add-scc-to-user anyuid -z grafana -n grafana
 ```
 
+Create a datasource through the API
 ```
 cd grafana
-
 
 TOKEN=insert-token-here
 curl -s -H "Authorization: Bearer $TOKEN" \
  -H "Content-Type: application/json" \
  --data @add_datasource.json http://grafana-grafana.127.0.0.1.nip.io/api/datasources \
  | jq .
-
-curl -s -H "Authorization: Bearer $TOKEN" \
- -H "Content-Type: application/json" \
- --data @add_dashboard.json http://grafana-grafana.127.0.0.1.nip.io/api/dashboards/db \
- | jq .
 ```
+
+[Prometheus dashboard!](https://grafana.com/dashboards/3662)
+[Kubernetes dashboard!](https://grafana.com/dashboards/315)
